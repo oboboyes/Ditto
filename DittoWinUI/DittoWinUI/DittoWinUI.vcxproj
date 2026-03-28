@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <VCStudioVCProjectsVersion>v17.0</VCStudioVCProjectsVersion>
+    <ProjectGuid>{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}</ProjectGuid>
+    <TargetPlatformVersion>10.0.22621.0</TargetPlatformVersion>
+    <WindowsAppSDKFoundationPackageVersion>1.5.240802000</WindowsAppSDKFoundationPackageVersion>
+    <AppxPackageDir>$(SolutionDir)AppPackages\</AppxPackageDir>
+    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WindowsAppRuntime>true</WindowsAppRuntime>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <EnableClangTidyCodeAnalysis>false</EnableClangTidyCodeAnalysis>
+    <LLVM_LTO>true</LLVM_LTO>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileWinRT>true</CompileWinRT>
+      <HasWINRT>true</HasWINRT>
+      <CppWinRTOptimized>true</CppWinRTOptimized>
+      <CppWinRTRebuild>true</CppWinRTRebuild>
+      <CppWinRTTypeInfoOnImplementation>true</CppWinRTTypeInfoOnImplementation>
+      <AdditionalUsingDirectories>$(WindowsSDK_WINRT_Fixed_AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <AdditionalOptions>/ZH:SHA_256 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>onecore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/DYNAMICBASE %(AdditionalOptions)</AdditionalOptions>
+      <WindowsAppRuntime>true</WindowsAppRuntime>
+    </Link>
+    <Midl>
+      <AdditionalOptions>%(AdditionalOptions)</AdditionalOptions>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="App.xaml.cpp" />
+    <ClCompile Include="MainWindow.xaml.cpp" />
+    <ClCompile Include="ViewModels\ViewModelBase.cpp" />
+    <ClCompile Include="ViewModels\MainViewModel.cpp" />
+    <ClCompile Include="ViewModels\QuickPasteViewModel.cpp" />
+    <ClCompile Include="ViewModels\SettingsViewModel.cpp" />
+    <ClCompile Include\Models\ClipItem.cpp" />
+    <ClCompile Include="Models\ClipFormat.cpp" />
+    <ClCompile Include="Models\ClipGroup.cpp" />
+    <ClCompile Include="Models\QueryFilter.cpp" />
+    <ClCompile Include="Services\DatabaseService.cpp" />
+    <ClCompile Include="Services\SettingsService.cpp" />
+    <ClCompile Include="Services\ClipboardService.cpp" />
+    <ClCompile Include="Services\HotKeyService.cpp" />
+    <ClCompile Include="Interop\ClipboardInterop.cpp" />
+    <ClCompile Include="Interop\HotKeyInterop.cpp" />
+    <ClCompile Include="Interop\ThemeInterop.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.xaml.h" />
+    <ClInclude Include="MainWindow.xaml.h" />
+    <ClInclude Include="ViewModels\ViewModelBase.h" />
+    <ClInclude Include="ViewModels\MainViewModel.h" />
+    <ClInclude Include="ViewModels\QuickPasteViewModel.h" />
+    <ClInclude Include="ViewModels\SettingsViewModel.h" />
+    <ClInclude Include="Models\ClipItem.h" />
+    <ClInclude Include="Models\ClipFormat.h" />
+    <ClInclude Include="Models\ClipGroup.h" />
+    <ClInclude Include="Models\QueryFilter.h" />
+    <ClInclude Include="Services\IServiceBase.h" />
+    <ClInclude Include="Services\IDatabaseService.h" />
+    <ClInclude Include="Services\ISettingsService.h" />
+    <ClInclude Include="Services\IClipboardService.h" />
+    <ClInclude Include="Services\IHotKeyService.h" />
+    <ClInclude Include="Services\DatabaseService.h" />
+    <ClInclude Include="Services\SettingsService.h" />
+    <ClInclude Include="Services\ClipboardService.h" />
+    <ClInclude Include="Services\HotKeyService.h" />
+    <ClInclude Include="Interop\ClipboardInterop.h" />
+    <ClInclude Include="Interop\HotKeyInterop.h" />
+    <ClInclude Include="Interop\ThemeInterop.h" />
+    <ClInclude Include="Converters\BoolToVisibilityConverter.h" />
+    <ClInclude Include="Converters\DateTimeConverter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </AppxManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\**\*.*" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(NugetPackageRoot)\Microsoft.WindowsAppSDK\$(WindowsAppSDKFoundationPackageVersion)\build\native\Microsoft.WindowsAppSDK.props" />
+    <Import Project="$(NugetPackageRoot)\Microsoft.Windows.CppWinRT\2.0.240270.1\build\native\Microsoft.Windows.CppWinRT.props" />
+    <Import Project="$(NugetPackageRoot)\SQLite\3.15.0\build\native\SQLite.props" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(NugetPackageRoot)\Microsoft.WindowsAppSDK\$(WindowsAppSDKFoundationPackageVersion)\build\native\Microsoft.WindowsAppSDK.targets" />
+    <Import Project="$(NugetPackageRoot)\Microsoft.Windows.CppWinRT\2.0.240270.1\build\native\Microsoft.Windows.CppWinRT.targets" />
+    <Import Project="$(NugetPackageRoot)\SQLite\3.15.0\build\native\SQLite.targets" />
+  </ImportGroup>
+</Project>

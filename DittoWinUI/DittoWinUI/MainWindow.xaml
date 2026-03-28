@@ -1,0 +1,107 @@
+<Page
+    x:Class="DittoWinUI.MainWindow"
+    x:Name="MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DittoWinUI"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:views="using:DittoWinUI.Views"
+    Title="Ditto WinUI 3">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <controls:NavigationView Grid.Row="0" x:Name="NavView"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="True"
+            PaneDisplayMode="Left"
+            SelectionChanged="NavView_SelectionChanged">
+            <controls:NavigationView.MenuItems>
+                <controls:NavigationViewItem Content="Clipboard History" Icon="Clipboard" Tag="Clipboard"/>
+                <controls:NavigationViewItem Content="Groups" Icon="Folder" Tag="Groups"/>
+                <controls:NavigationViewItem Content="Quick Paste" Icon="Send" Tag="QuickPaste"/>
+            </controls:NavigationView.MenuItems>
+            <controls:NavigationView.FooterMenuItems>
+                <controls:NavigationViewItem Content="Settings" Icon="Settings" Tag="Settings"/>
+            </controls:NavigationView.FooterMenuItems>
+        </controls:NavigationView>
+
+        <Grid Grid.Row="1" x:Name="ContentGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" x:Name="GroupPanel" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="16,16,16,8">
+                    <TextBlock Text="Groups" FontSize="14" FontWeight="SemiBold" Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                    <Button Content="New Group" Margin="0,8,0,0" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1" x:Name="GroupListView" Margin="8,0,8,8">
+                    <ListViewItem Content="All Items" IsSelected="True"/>
+                    <ListViewItem Content="Pinned"/>
+                    <ListViewItem Content="Work"/>
+                    <ListViewItem Content="Personal"/>
+                </ListView>
+            </Grid>
+
+            <Grid Grid.Column="1" x:Name="ClipListPanel">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="16">
+                    <AutoSuggestBox x:Name="SearchBox" Width="300" PlaceholderText="Search clips..."/>
+                    <Button Content="Refresh" Margin="16,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1" x:Name="ClipListView" Margin="16,0,16,16">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,4">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding Description}" 
+                                    TextTrimming="CharacterEllipsis" FontWeight="SemiBold"/>
+                                <TextBlock Grid.Column="0" Grid.Row="1" 
+                                    Text="{Binding Created}" FontSize="12" 
+                                    Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"/>
+                                <StackPanel Grid.Column="1" Grid.RowSpan="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <SymbolIcon Symbol="Pin" Margin="8,0"/>
+                                    <SymbolIcon Symbol="Delete"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <StatusBar Grid.Row="2">
+                    <StatusBarItem>
+                        <TextBlock x:Name="StatusText" Text="Ready"/>
+                    </StatusBarItem>
+                    <StatusBarItem HorizontalAlignment="Right">
+                        <TextBlock x:Name="ClipCountText" Text="0 items"/>
+                    </StatusBarItem>
+                </StatusBar>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
